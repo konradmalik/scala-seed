@@ -1,0 +1,19 @@
+# add git-ignore syntax here of things you don't want copied into docker image
+Dockerfile
+*/Dockerfile
+.dockerignore
+*/.dockerignore
+.git
+*/.gitignore
+*.gitignore
+.metals
+*/metals.sbt
+.bloop
+.idea
+Makefile
+*/Makefile
+logs
+*/logs
+docker-compose*
+target
+*/target
