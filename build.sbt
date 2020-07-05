@@ -1,22 +1,24 @@
-import Dependencies._
+// run enable twice, workaround.
+// Don't know why but suggested approach with semantic in ThisBuild does not work
+// while scalafix seems to always fail after scalafixEnable is run second time in the same sbt session
+addCommandAlias("scalafixAll", "scalafixEnable; all compile:scalafix test:scalafix; scalafmtAll; scalafixEnable")
 
-organization in ThisBuild := "io.github.konradmalik"
-scalaVersion in ThisBuild := scalaVersionNumber
-lazy val projectName = "scala-seed"
-name := projectName
+shellPrompt := { s => Project.extract(s).currentProject.id + " > " }
+
+import konradmalik.Dependencies._
+
+inThisBuild(
+  List(
+    organization := "io.github.konradmalik",
+    scalaVersion := scalaVersionNumber,
+    scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.3.0"
+  )
+)
 
 // If you Spark people want to include "provided" dependencies back to run,
 // run in Compile := Defaults.runTask(fullClasspath in Compile, mainClass in(Compile, run), runner in(Compile, run)).evaluated
 
 // modules
-lazy val global = Project(projectName, file("."))
-  .settings(settings)
-  .disablePlugins(AssemblyPlugin)
-  .aggregate(
-    shared,
-    spark
-  )
-
 lazy val shared = project
   .settings(
     name := "shared",
@@ -50,15 +52,17 @@ lazy val spark = project
 
 // DEPENDENCIES
 lazy val commonDependencies =
-  typesafe ++ logback ++ scalaReflect
+  typesafe ++ logback ++ scalaReflect ++ scalaTest
 
 // SETTINGS
 lazy val settings =
   commonSettings
 
 lazy val compilerOptions = Seq(
+  "-target:jvm-1.8",
   "-unchecked",
   "-feature",
+  "-Ywarn-unused",
   "-language:existentials",
   "-language:higherKinds",
   "-language:implicitConversions",
@@ -79,6 +83,7 @@ lazy val commonSettings = Seq(
 
 lazy val assemblySettings = Seq(
   assemblyJarName in assembly := name.value + ".jar",
+  test in assembly := {},
   assemblyMergeStrategy in assembly := {
     case PathList("META-INF", xs@_*) => MergeStrategy.discard
     case "application.conf" | "reference.conf" => MergeStrategy.concat

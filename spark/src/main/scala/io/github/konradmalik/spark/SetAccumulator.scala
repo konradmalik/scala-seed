@@ -3,20 +3,21 @@ package io.github.konradmalik.spark
 import org.apache.spark.util.AccumulatorV2
 
 /**
- * [[Set]] implemented as a Spark Accumulator
- *
- * @param init initialization of the accumulator
- * @tparam T Type of values
- */
+  * [[Set]] implemented as a Spark Accumulator
+  *
+  * @param init initialization of the accumulator
+  * @tparam T Type of values
+  */
 class SetAccumulator[T](init: Set[T]) extends AccumulatorV2[T, Set[T]] {
+
   /**
-   * Internal collection
-   */
+    * Internal collection
+    */
   private var _value: Set[T] = init
 
   /**
-   * Constructor
-   */
+    * Constructor
+    */
   def this() = this(Set.empty[T])
 
   override def value: Set[T] = _value
@@ -29,5 +30,6 @@ class SetAccumulator[T](init: Set[T]) extends AccumulatorV2[T, Set[T]] {
 
   override def add(v: T): Unit = _value = _value + v
 
-  override def merge(other: AccumulatorV2[T, Set[T]]): Unit = _value = _value ++ other.value
+  override def merge(other: AccumulatorV2[T, Set[T]]): Unit =
+    _value = _value ++ other.value
 }

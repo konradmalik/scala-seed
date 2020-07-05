@@ -1,6 +1,5 @@
 package io.github.konradmalik.config
 
-
 trait DemoConfig {
 
   import DemoConfig._
@@ -9,9 +8,8 @@ trait DemoConfig {
 }
 
 /**
- * Private companion to create config instances
- */
+  * Private companion to create config instances
+  */
 private object DemoConfig {
   lazy final val demoConfig = TypesafeConfig.coreConfig.getConfig("demo")
 }
-

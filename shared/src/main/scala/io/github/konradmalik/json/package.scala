@@ -6,10 +6,10 @@ import java.time.Instant
 import com.fasterxml.jackson.databind.JsonNode
 
 /**
- * Package to handle Json serialization and deserialization.
- * Here package-shared helper methods are placed.
- * Current implementation uses Jackson.
- */
+  * Package to handle Json serialization and deserialization.
+  * Here package-shared helper methods are placed.
+  * Current implementation uses Jackson.
+  */
 package object konradmalik {
   def longNodeToTimestamp(node: JsonNode): Timestamp = {
     if (node.canConvertToLong)

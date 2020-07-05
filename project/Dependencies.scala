@@ -1,3 +1,5 @@
+package konradmalik
+
 import sbt._
 
 object Dependencies {
@@ -46,4 +48,6 @@ object Dependencies {
   lazy val typesafe = Seq("com.typesafe" % "config" % "1.4.0")
   lazy val logback = Seq("ch.qos.logback" % "logback-classic" % "1.2.3")
   lazy val scalaReflect = Seq("org.scala-lang" % "scala-reflect" % scalaVersionNumber)
+
+  lazy val scalaTest = Seq("org.scalatest" %% "scalatest" % "3.2.0" % Test)
 }

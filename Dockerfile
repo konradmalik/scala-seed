@@ -9,4 +9,4 @@ COPY build.sbt .
 RUN sbt update
 # Then build
 COPY . .
-RUN sbt assembly
+RUN sbt scalafixAll && sbt assembly
